@@ -1,0 +1,7 @@
+c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostApiCore\bin\Debug\PostApiCore.dll
+c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostApiCore\bin\Debug\PostApiCore.pdb
+c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostApiCore\obj\Debug\PostApiCore.dll
+c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostApiCore\obj\Debug\PostApiCore.pdb
+c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostApiCore\bin\Debug\Newtonsoft.Json.dll
+c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostApiCore\bin\Debug\Newtonsoft.Json.xml
+C:\Users\shadan\Documents\Visual Studio 2015\Projects\PostManagementApp\PostApiCore\obj\Debug\PostApiCore.csprojResolveAssemblyReference.cache
