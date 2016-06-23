@@ -97,13 +97,22 @@ namespace PostApiCore.ViewModel
 
 
         #region Commands
+        
+            private ICommand _copyHTMLcommand;
+        public ICommand CopyHTMLCommand
+        {
+            get
+            {
+                return _copyHTMLcommand ?? (_copyHTMLcommand = new Command(p => CopyHTML(), q => this.CanCopy()));
+            }
+        }
 
         private ICommand _copyJSONcommand;
         public ICommand CopyJSONCommand
         {
             get
             {
-                return _copyJSONcommand ?? (_copyJSONcommand = new Command(p => CopyJSON(), q => this.CanCopyJSON()));
+                return _copyJSONcommand ?? (_copyJSONcommand = new Command(p => CopyJSON(), q => this.CanCopy()));
             }
         }
 
@@ -112,7 +121,7 @@ namespace PostApiCore.ViewModel
         {
             get
             {
-                return _copyPlainTextcommand ?? (_copyPlainTextcommand = new Command(p => this.CopyPlainText(), q => this.CanCopyPlainText()));
+                return _copyPlainTextcommand ?? (_copyPlainTextcommand = new Command(p => this.CopyPlainText(), q => this.CanCopy()));
             }
         }
 
@@ -121,7 +130,7 @@ namespace PostApiCore.ViewModel
         {
             get
             {
-                return _copyXMLcommand ?? (_copyXMLcommand = new Command(p => this.CopyXML(), q => this.CanCopyXML()));
+                return _copyXMLcommand ?? (_copyXMLcommand = new Command(p => this.CopyXML(), q => this.CanCopy()));
             }
         }
 
@@ -129,6 +138,20 @@ namespace PostApiCore.ViewModel
 
 
         #region methods
+
+        /// <summary>
+        /// Copies the Post into HTML
+        /// </summary>
+        private void CopyHTML()
+        {
+            string content = jsonLoaderService.ConvertObjectToHTML(SelectedPost);
+            CopyContent = content;
+            Clipboard.SetText(CopyContent);
+        }
+
+       
+
+
         /// <summary>
         /// Copies the Post into JSON
         /// </summary>
@@ -139,14 +162,7 @@ namespace PostApiCore.ViewModel
             Clipboard.SetText(CopyContent);
         }
 
-        /// <summary>
-        /// Is Copy JSON
-        /// </summary>
-        /// <returns>True or False</returns>
-        private bool CanCopyJSON()
-        {
-            return (SelectedPost != null);
-        }
+       
        
 
         /// <summary>
@@ -158,14 +174,7 @@ namespace PostApiCore.ViewModel
             Clipboard.SetText(CopyContent);
         }
 
-        /// <summary>
-        /// Is Copy Plain Text
-        /// </summary>
-        /// <returns>True or False</returns>
-        private bool CanCopyPlainText()
-        {
-            return (SelectedPost != null);
-        }
+        
 
         /// <summary>
         /// Copies the Post into XML
@@ -179,10 +188,10 @@ namespace PostApiCore.ViewModel
         }
 
         /// <summary>
-        /// Is Copy XML
+        /// checks whether copy command can be executed
         /// </summary>
         /// <returns>True or False</returns>
-        private bool CanCopyXML()
+        private bool CanCopy()
         {
             return (SelectedPost != null);
         }

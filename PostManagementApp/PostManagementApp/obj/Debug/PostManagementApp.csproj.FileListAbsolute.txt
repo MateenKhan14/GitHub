@@ -16,3 +16,21 @@ c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostMana
 c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp.pdb
 c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostManagementApp\bin\Debug\Newtonsoft.Json.dll
 c:\users\shadan\documents\visual studio 2015\Projects\PostManagementApp\PostManagementApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\bin\Debug\PostManagementApp.exe.config
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp.exe
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp.pdb
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\bin\Debug\PostManagementApp.exe
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\bin\Debug\PostManagementApp.pdb
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\bin\Debug\PostApiCore.dll
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\bin\Debug\PostApiCore.pdb
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp.csprojResolveAssemblyReference.cache
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\Views\PostViewer.g.cs
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\App.g.cs
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp_MarkupCompile.cache
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp_MarkupCompile.lref
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\Views\PostViewer.baml
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp.g.resources
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp.Properties.Resources.resources
+C:\Users\shadan\Documents\GitHub\PostManagementApp\PostManagementApp\obj\Debug\PostManagementApp.csproj.GenerateResource.Cache

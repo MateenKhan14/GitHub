@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PostApiCore.Model;
 using System.Xml;
+using System.Text;
 
 namespace PostApiCore
 {
@@ -72,9 +73,9 @@ namespace PostApiCore
             {               
                 retval = JsonConvert.SerializeObject(data);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                return string.Empty;
+                return "Error while converting from post object post to JSON";
             }
             return retval;
         }
@@ -89,12 +90,32 @@ namespace PostApiCore
                  doc = JsonConvert.DeserializeXmlNode(jsonData,"Post");
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return string.Empty;
+                return "Error while converting from JSON post to XML";
             }
             return doc.InnerXml;
         }
+
+        public string ConvertObjectToHTML(Post data)
+        {
+            try
+            {
+                var xmlString = ConvertObjectToXML(data);
+                StringBuilder html = new StringBuilder("<html><head></head><body>");
+                html.Append(xmlString);
+                html.Append("</body> </html>");
+                return html.ToString();
+
+            }
+            catch (Exception)
+            {
+                return "Error while converting from JSON post to HTML";
+            }
+
+        }
+
+
 
         /// <summary>
         /// Returns the content of JSON API for specific element
