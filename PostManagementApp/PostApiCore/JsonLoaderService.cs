@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using Newtonsoft.Json;
-using System.Collections;
+using System.IO;
 using System.Collections.Generic;
 using PostApiCore.Model;
 using System.Xml;
@@ -14,7 +14,7 @@ namespace PostApiCore
     /// I could have used JavaScriptSerializer,DataContractJsonSerializer but Newtonsoft is  50% faster than DataContractJsonSerializer, and 250% faster than JavaScriptSerializer
     /// so its the best Json Serializer 
     /// </summary>
-    public class JsonLoaderService:IDisposable,iPostLoader
+    public class JsonLoaderService:IDisposable
     {
 
         
@@ -28,13 +28,13 @@ namespace PostApiCore
             /// </summary>
             private WebClient restAPIClient;
 
-        private List<ModelBase> lstdata;
+        
 
             /// <summary>
             /// Construct the Instance of JSON API Loader
             /// </summary>
             /// <param name="apiURL"> The JSON API URL</param>
-        public JsonLoaderService(Uri apiURL, List<ModelBase> data)
+        public JsonLoaderService(Uri apiURL)
             {
                 if (apiURL == null)
                 {
@@ -43,23 +43,31 @@ namespace PostApiCore
 
                 this.serviceURL = apiURL;
                 restAPIClient = new WebClient();
-            lstdata = data;
+          
             }
 
             /// <summary>
             /// Returns a full content of JSON API
             /// </summary>
             /// <returns>Content of JSON API</returns>
-            public IEnumerable<ModelBase> LoadAPI()
+            public List<Post> LoadAPI()
             {
-            IEnumerable<ModelBase> list;
+            List<Post> list;
             try
             {
                 var content = this.restAPIClient.DownloadString(this.serviceURL);
-                list = JsonConvert.DeserializeObject<List<Post>>(content);
+                if (string.IsNullOrEmpty(content))
+                {
+                    list = GetCachedData();
+                }
+                else
+                {
+                    list = JsonConvert.DeserializeObject<List<Post>>(content);
+                    CachePostData(content);
+                }
                 return list;
             }
-            catch(Exception ex)
+            catch
             {
                 return null;   
             }
@@ -79,6 +87,8 @@ namespace PostApiCore
             }
             return retval;
         }
+
+
 
         public string ConvertObjectToXML(Post data)
         {
@@ -137,17 +147,38 @@ namespace PostApiCore
                 var content = this.restAPIClient.DownloadString(url);
                  retObject = JsonConvert.DeserializeObject<ModelBase>(content);
             }
-            catch(Exception ex)
+            catch
             {
-
+                return null;
             }
-            finally
-            {
-
-                
-
-            }
+           
             return retObject;
+        }
+        private void CachePostData(string postData)
+        {
+            try
+            {
+                File.WriteAllText(System.AppDomain.CurrentDomain.BaseDirectory + @"\posts.json", postData);
+            }
+            catch
+            {
+                throw ;
+            }
+
+        }
+
+        private List<Post> GetCachedData()
+        {
+            try
+            {
+             return   JsonConvert.DeserializeObject<List<Post>>(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\posts.json"));
+            }
+            catch (IOException ex)
+            {
+                throw ex;
+            }
+
+
         }
 
             /// <summary>
@@ -155,7 +186,7 @@ namespace PostApiCore
             /// </summary>
             public void Dispose()
             {
-                this.restAPIClient = null;
+            restAPIClient.Dispose();
             }
         }
 }

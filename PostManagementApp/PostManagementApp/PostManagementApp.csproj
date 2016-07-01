@@ -102,9 +102,14 @@
       <Name>PostApiCore</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <SplashScreen Include="Resources\SplashScreen1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\HTML.png" />
+    <Resource Include="Resources\JSon.png" />
+    <Resource Include="Resources\Text.png" />
+    <Resource Include="Resources\XML.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,2 @@
+ The Post Managememt Application helps a user to view post fetched from Fake Jason rest Api. A post can then be copied in XML, Text, HTML, or JASON format.
+ Applicatioin uses a Third Party Library JSON. NET for all its JSON fetching and convertion related functionalities.

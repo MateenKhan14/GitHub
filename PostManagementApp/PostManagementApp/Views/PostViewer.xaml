@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PostManagementApp"
          xmlns:l="clr-namespace:PostApiCore.Converter;assembly=PostApiCore"
         mc:Ignorable="d"
-        Title="Post Management App" Height="500" Width="620"  ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" BorderThickness="5" WindowStyle="ToolWindow">
+        Title="Post Management App" Height="600" Width="720"   WindowStartupLocation="CenterScreen" BorderThickness="5" WindowStyle="ToolWindow">
     <Window.Resources>
         <l:BoolToVisibilityConverter x:Key="converterForVisibility" />
         <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -16,12 +16,48 @@
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Height" Value="30" />
         </Style>
+        <Style x:Key="ButtonFocusVisual">
+            
+            <Setter  Property="Control.Template">
+                
+                <Setter.Value>
+                    
+                    <ControlTemplate>                        
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2" />                        
+                    </ControlTemplate>
+                    
+                </Setter.Value>
+                
+            </Setter>
+            
+        </Style>
+
+        <Style TargetType="Button" >
+            <Setter Property="Margin" Value="10,2,1,2"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Height" Value="25"></Setter>
+            <Setter Property="Width" Value="100"></Setter>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+            <Setter Property="VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="Background" Value="#EEEEEEEE"/>
+           
+            <Setter Property="Foreground" Value="Black"/>     
+                      
+            
+           
+            <Setter Property="FontSize" Value="14" />
+           
+            <Setter Property="BorderThickness" Value="2" />
+
+        </Style>
+
     </Window.Resources>
    
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             
         </Grid.RowDefinitions>
@@ -32,20 +68,24 @@
             <Label FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">Post Management Application</Label>
         </Border>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button Name="LoadPosts" Content="Load Post" Command="{Binding LoadPostCommand}" ></Button>            
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
             <StackPanel>
-                <DataGrid AutoGenerateColumns="False" AlternatingRowBackground="PowderBlue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemsSource="{Binding PostCollection}" SelectedItem="{Binding SelectedPost}"
-                      Margin="10" Height="364" Width="380" BorderBrush="Gray" BorderThickness="1" IsReadOnly="True" CanUserReorderColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <DataGrid AutoGenerateColumns="False" AlternatingRowBackground="PowderBlue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemsSource="{Binding Path=PostCollection}" SelectedItem="{Binding SelectedPost}"
+                      Margin="10" Height="450" Width="420" BorderBrush="Gray" BorderThickness="1" IsReadOnly="True" CanUserReorderColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
                 <DataGridTextColumn Header="User ID" Binding="{Binding userId}" Width='60' ></DataGridTextColumn>
                 <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="50"></DataGridTextColumn>
-                <DataGridTextColumn Header="Title" Binding="{Binding title}" Width="250"></DataGridTextColumn>
+                <DataGridTextColumn Header="Title" Binding="{Binding title}" Width="350"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
            
             </StackPanel>
             
-                <GroupBox Header="Post Details" Width="180" FontWeight="Bold">
-                <TextBlock Margin="0,0,5,-1" Text="{Binding PostDetails}" ToolTip="Right Click to Copy Post data" >
+                <GroupBox Header="Post Details" Width="226" FontWeight="Bold" >
+                <TextBlock Margin="1,1,1,1" Text="{Binding PostDetails}" ToolTip="Right Click to Copy Post data" TextWrapping="Wrap" >
                     <TextBlock.ContextMenu>
                         <ContextMenu >
                             <MenuItem Header="Copy Plain text" Command="{Binding CopyPlainTextCommand}">
@@ -54,8 +94,14 @@
                                         <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Copy the JSON API Post Content in Plain Text</TextBlock>
                                     </StackPanel>
                                 </MenuItem.ToolTip>
+                                <MenuItem.Icon>
+                                    <Image Source="/Resources/Text.png"></Image> 
+                                </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="Copy JSON text" Command="{Binding CopyJSONCommand}" BorderThickness="2">
+                                <MenuItem.Icon>
+                                    <Image Source="/Resources/JSon.png"></Image> 
+                                </MenuItem.Icon>
                                 <MenuItem.ToolTip>
                                     <StackPanel>
                                         <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Copy the JSON API Post Content in JSON</TextBlock>
@@ -63,6 +109,9 @@
                                 </MenuItem.ToolTip>
                             </MenuItem> 
                             <MenuItem Header="Copy XML Text"  Command="{Binding CopyJSONXMLCommand}" >
+                                <MenuItem.Icon>
+                                    <Image Source="/Resources/XML.png"></Image> 
+                                </MenuItem.Icon>
                                 <MenuItem.ToolTip>
                                     <StackPanel>
                                         <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Copy the JSON API Post Content in XML</TextBlock>
@@ -75,6 +124,9 @@
                                         <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Copy the JSON API Post Content in HTML</TextBlock>
                                     </StackPanel>
                                 </MenuItem.ToolTip>
+                                <MenuItem.Icon>
+                                    <Image Source="/Resources/HTML.png"></Image>
+                                </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
                     </TextBlock.ContextMenu>
@@ -83,8 +135,8 @@
                 </GroupBox>
             
         </StackPanel>
-        <Border Background="Gray" Grid.RowSpan="3" Visibility="{Binding IsDataExtracted, Converter={StaticResource converterForVisibility}}" >
-            <TextBlock Text="Problem in extracting Posts(probably no internet connection)" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Border Background="Transparent"   Grid.RowSpan="3" Visibility="{Binding IsDataExtracted, Converter={StaticResource converterForVisibility}}" Margin="0,-120,0,120" >
+            <TextBlock Text="Loading Posts..." Visibility="Visible" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"/>
         </Border>
         
     </Grid>

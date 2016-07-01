@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using PostApiCore.Model;
 using System.Windows.Input;
@@ -13,12 +9,18 @@ namespace PostApiCore.ViewModel
 {
   public  class PostViewerViewModel: ModelBase
     {
+        #region Variables
         private readonly Uri serviceURL;
         JsonLoaderService jsonLoaderService;
-
-        private IEnumerable<ModelBase> postCollection;
-
-        public IEnumerable<ModelBase> PostCollection
+        private Post _selectedPost;
+        private List<Post> postCollection;
+        private string _copyContent;
+        private string _postDetails;
+        bool _isDataExtracted;
+        private const string url = "http://jsonplaceholder.typicode.com/posts";
+        #endregion
+        #region Properties
+        public List<Post> PostCollection
         {
             get
             {
@@ -28,10 +30,11 @@ namespace PostApiCore.ViewModel
             set
             {
                 postCollection = value;
+                RaisePropertyChanged("PostCollection");
             }
         }
 
-        private Post _selectedPost;
+       
         public Post SelectedPost
         {
             get { return _selectedPost; }
@@ -43,7 +46,7 @@ namespace PostApiCore.ViewModel
             }
         }
 
-        private string _copyContent;
+       
         public string CopyContent
         {
             get { return _copyContent; }
@@ -55,7 +58,7 @@ namespace PostApiCore.ViewModel
             }
         }
 
-        private string _postDetails;
+        
         public string PostDetails
         {
             get { return _postDetails; }
@@ -66,39 +69,41 @@ namespace PostApiCore.ViewModel
             }
         }
 
-        bool _isDataExtracted;
+      
         public bool IsDataExtracted
         {
             get { return _isDataExtracted; }
             set {
                 _isDataExtracted = value;
+                RaisePropertyChanged("IsDataExtracted");
             }
         }
-        
+        #endregion
+        #region Constructor
         /// <summary>
         /// when the view model is initialized all the data from Fake Rest Apli will be loaded in an Observable collection
         /// </summary>
         public PostViewerViewModel()
         {
-            serviceURL = new Uri("http://jsonplaceholder.typicode.com/posts");
-            PostCollection = new ObservableCollection<Post>();
-            jsonLoaderService = new JsonLoaderService(serviceURL, PostCollection.ToList());
-            var result = jsonLoaderService.LoadAPI();
-            if (result != null)
+            serviceURL = new Uri(url);
+            postCollection = new List<Post>();
+            jsonLoaderService = new JsonLoaderService(serviceURL);
+            _isDataExtracted = false;
+        }
+
+        #endregion
+        #region Commands
+
+        private ICommand _loadPost;
+        public ICommand LoadPostCommand
+        {
+            get
             {
-                PostCollection = result;
-                IsDataExtracted = false;
-            }
-            else
-            {
-                IsDataExtracted = true;
+                return _loadPost ?? (_loadPost = new Command(p => LoadData(), q => true));
             }
         }
 
-
-        #region Commands
-        
-            private ICommand _copyHTMLcommand;
+        private ICommand _copyHTMLcommand;
         public ICommand CopyHTMLCommand
         {
             get
@@ -135,9 +140,37 @@ namespace PostApiCore.ViewModel
         }
 
         #endregion
+        #region Methods
 
+       
 
-        #region methods
+        /// <summary>
+        /// loads data from Json Service if no data pressent loads data from cache
+        /// </summary>
+        public async void LoadData()
+        {
+            IsDataExtracted = true;
+            var result = await LoadDataAsync();
+            if (result != null)
+            {
+                PostCollection = result;
+                IsDataExtracted = false;
+            }
+            else
+            {
+                IsDataExtracted = false;
+            }
+        }
+
+        /// <summary>
+        /// Loads data Asynchronously
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Post>> LoadDataAsync()
+        {
+            return await Task.Run(() => jsonLoaderService.LoadAPI());
+        }
+
 
         /// <summary>
         /// Copies the Post into HTML

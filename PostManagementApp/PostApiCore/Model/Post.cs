@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.ComponentModel;
 
 namespace PostApiCore.Model
@@ -26,14 +26,6 @@ namespace PostApiCore.Model
         public string body { get; set; }
 
         
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected  void RaisePropertyChanged(string propertyname)
-        {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler.Invoke(this, new PropertyChangedEventArgs(propertyname));
-            }
-        }
+       
     }
 }
